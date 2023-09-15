@@ -36,6 +36,15 @@ io.on('connection', (socket) => {
         console.log(message);
         io.emit('message', `${socket.id.substr(0,2)} said ${message}` );   
     });
+
+    io.broadcast = function(data) {
+      this.clients.forEach((client) => {
+        if(client.readyState === WebSocket.OPEN) {
+          client.send(data, {binary: false});
+        }
+      });
+    };
+
 });
 
-http.listen(3000, () => console.log('listening on http://localhost:3000') );
+http.listen(3000, () => console.log('listening on http://localhost:3000'));
