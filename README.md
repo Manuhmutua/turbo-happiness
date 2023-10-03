@@ -1,3 +1,11 @@
+## Test
+
+To test run:
+
+```sh
+docker-compose up
+```
+
 # init-deployment 
 
 This template should help get you started developing with Vue 3 in Vite.
