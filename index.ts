@@ -23,28 +23,41 @@ insertCars(cars);
 const query = db.query("SELECT * FROM cars");
 const results = query.all();
 
+const fs = require('fs');
+
 const http = require('http').createServer();
 
 const io = require('socket.io')(http, {
     cors: { origin: "http://192.168.56.1:5173/" }
 });
 
+const clients = [];
+
 io.on('connection', (socket) => {
     console.log('a user connected');
+	
+    clients.push(socket);
 
-    socket.on('message', (message) =>     {
+    socket.on('message', (message) => {
         console.log(message);
-        io.emit('message', `${socket.id.substr(0,2)} said ${message}` );   
+        io.broadcast(message);
+	io.emit("message", message);   
     });
 
-    io.broadcast = function(data) {
-      this.clients.forEach((client) => {
-        if(client.readyState === WebSocket.OPEN) {
-          client.send(data, {binary: false});
+    socket.on('close', () => {
+        const index = clients.indexOf(ws);
+        if (index !== -1) {
+          clients.splice(index, 1);
         }
-      });
-    };
-
+    });
 });
+
+io.broadcast = function(data) {
+  clients.forEach((client) => {
+    if(client.readyState === WebSocket.OPEN) {
+      client.emit('message', data);
+    }
+  });
+};
 
 http.listen(3000, () => console.log('listening on http://localhost:3000'));
