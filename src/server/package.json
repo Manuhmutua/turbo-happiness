@@ -1,0 +1,16 @@
+{
+    "name": "echo-pair",
+    "module": "index.ts",
+    "type": "module",
+    "devDependencies": {
+    "bun-types": "latest"
+    },
+    "peerDependencies": {
+    "typescript": "^5.0.0"
+    },
+    "dependencies": {
+    "rtcpeerconnection": "^8.4.0",
+    "socket.io": "^4.7.2",
+    "ws": "^8.14.1"
+    }
+}

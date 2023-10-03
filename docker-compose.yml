@@ -1,0 +1,13 @@
+services:
+  server:
+    build: ./src/server
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/code
+  client:
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/code

@@ -10,7 +10,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-const socket = io('https://33ef-197-248-224-74.ngrok-free.app/');
+const socket = io('http://localhost:3000/');
 
 const app = createApp(App)
 
